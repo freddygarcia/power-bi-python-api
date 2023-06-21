@@ -1,7 +1,7 @@
-from typing import List
+from typing import List, TypedDict
 from typing import Dict
-from typing import Union
 
+import abc
 import json
 import msal
 import time
@@ -10,10 +10,29 @@ import random
 import string
 import pathlib
 
-from powerbi.session import PowerBiSession
+
+class TokenDict(TypedDict):
+    token_type: str
+    scope: str
+    expires_in: int
+    ext_expires_in: int
+    access_token: str
+    refresh_token: str
+    id_token: str
+    client_info: str
+    id_token_claims: str
 
 
-class PowerBiAuth():
+class IPowerBiAuth(abc.ABC):
+    access_token: str
+
+
+class PowerBiSimpleTokenAuth(IPowerBiAuth):
+    def __init__(self, access_token: str):
+        self.access_token = access_token
+
+
+class PowerBiAuth(IPowerBiAuth):
 
     AUTHORITY_URL = 'https://login.microsoftonline.com/'
     AUTH_ENDPOINT = '/oauth2/v2.0/authorize?'
@@ -159,7 +178,7 @@ class PowerBiAuth():
 
         ### Returns
         ----
-        int : 
+        int :
             The number of seconds till expiration.
         """
 
@@ -225,6 +244,7 @@ class PowerBiAuth():
 
     def login(self) -> None:
         """Logs the user into the session."""
+        from powerbi.session import PowerBiSession
 
         # Load the State.
         self._state(action='load')

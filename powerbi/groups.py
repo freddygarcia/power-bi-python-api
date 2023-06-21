@@ -69,7 +69,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='get',
-            endpoint=f'myorg/groups/{group_id}/users'
+            endpoint=f'{self.endpoint}/{group_id}/users'
         )
 
         return content
@@ -106,7 +106,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='post',
-            endpoint=f'myorg/groups?workspaceV2={workspace_v2}',
+            endpoint=f'{self.endpoint}?workspaceV2={workspace_v2}',
             json_payload=params
         )
 
@@ -130,7 +130,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='delete',
-            endpoint=f'myorg/groups/{group_id}'
+            endpoint=f'{self.endpoint}/{group_id}'
         )
 
         return content
@@ -158,7 +158,7 @@ class Groups():
             Display name of the principal.
 
         email_address : str (optional, Default=None)
-            Email address of the user.  
+            Email address of the user.
 
         identifier : str (optional, Default=None)
             Object ID of the principal
@@ -191,7 +191,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='post',
-            endpoint=f'myorg/groups/{group_id}/users',
+            endpoint=f'{self.endpoint}/{group_id}/users',
             json_payload=params
         )
 
@@ -210,7 +210,7 @@ class Groups():
             The workspace ID.
 
         email_address : str
-            Email address of the user.  
+            Email address of the user.
 
         ### Usage
         ----
@@ -223,7 +223,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='delete',
-            endpoint=f'myorg/groups/{group_id}/users/{email_address}'
+            endpoint=f'{self.endpoint}/{group_id}/users/{email_address}'
         )
 
         return content
@@ -251,7 +251,7 @@ class Groups():
             Display name of the principal.
 
         email_address : str (optional, Default=None)
-            Email address of the user.  
+            Email address of the user.
 
         identifier : str (optional, Default=None)
             Object ID of the principal
@@ -284,7 +284,7 @@ class Groups():
 
         content = self.power_bi_session.make_request(
             method='post',
-            endpoint=f'myorg/groups/{group_id}/users',
+            endpoint=f'{self.endpoint}/{group_id}/users',
             json_payload=params
         )
 

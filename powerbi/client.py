@@ -1,7 +1,5 @@
-from typing import List
-
+from powerbi.datasets import Datasets
 from powerbi.session import PowerBiSession
-from powerbi.auth import PowerBiAuth
 from powerbi.dashboards import Dashboards
 from powerbi.groups import Groups
 from powerbi.users import Users
@@ -25,72 +23,20 @@ class PowerBiClient:
     REST Services.
     """
 
-    def __init__(
-        self,
-        client_id: str,
-        client_secret: str,
-        redirect_uri: str,
-        scope: List[str],
-        account_type: str = "common",
-        credentials: str = None,
-    ):
+    def __init__(self, power_bi_session: PowerBiSession):
         """Initializes the Graph Client.
 
         ### Parameters
         ----
-        client_id : str
-            The application Client ID assigned when
-            creating a new Microsoft App.
-
-        client_secret : str
-            The application Client Secret assigned when
-            creating a new Microsoft App.
-
-        redirect_uri : str
-            The application Redirect URI assigned when
-            creating a new Microsoft App.
-
-        scope : List[str]
-            The list of scopes you want the application
-            to have access to.
-
-        account_type : str (optional, Default='common')
-            The account type you're application wants to
-            authenticate as.
-
-        credentials : str (optional, Default=None)
-            The file path to your local credential file.
+        power_bi_session (PowerBiSession) :
+            An instance of the `PowerBiSession` class.
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
+            >>> apps_service = power_bi_client.apps()
         """
-
-        self.credentials = credentials
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.account_type = account_type
-        self.redirect_uri = redirect_uri
-        self.scope = scope
-
-        self.power_bi_auth_client = PowerBiAuth(
-            client_id=self.client_id,
-            client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
-            scope=self.scope,
-            account_type=self.account_type,
-            credentials=self.credentials,
-        )
-
-        self.power_bi_auth_client.login()
-
-        self.power_bi_session = PowerBiSession(client=self.power_bi_auth_client)
+        self.power_bi_session = power_bi_session
 
     def apps(self) -> Apps:
         """Used to access the `Apps` Services and metadata.
@@ -102,13 +48,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> apps_service = power_bi_client.apps()
         """
 
@@ -124,13 +64,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> dashboard_service = power_bi_client.dashboards()
         """
 
@@ -146,13 +80,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> groups_service = power_bi_client.groups()
         """
 
@@ -168,13 +96,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> users_service = power_bi_client.users()
         """
 
@@ -190,13 +112,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> template_apps_service = power_bi_client.template_apps()
         """
 
@@ -212,13 +128,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> dataflow_storage_service = power_bi_client.dataflow_storage_accounts()
         """
 
@@ -234,13 +144,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> push_datasets_service = power_bi_client.push_datasets()
         """
 
@@ -256,13 +160,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> imports_service = power_bi_client.imports()
         """
 
@@ -278,13 +176,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> power_bi_client = PowerBiClient(power_bi_session=power_bi_session)
             >>> reports_service = power_bi_client.reports()
         """
 
@@ -300,13 +192,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> reports_service = power_bi_client.reports()
             >>> available_features_service = power_bi_client.available_features()
         """
 
@@ -322,13 +208,7 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> reports_service = power_bi_client.reports()
             >>> capacities_service = power_bi_client.capactities()
         """
 
@@ -344,14 +224,24 @@ class PowerBiClient:
 
         ### Usage
         ----
-            >>> power_bi_client = PowerBiClient(
-                client_id=client_id,
-                client_secret=client_secret,
-                scope=['https://analysis.windows.net/powerbi/api/.default'],
-                redirect_uri=redirect_uri,
-                credentials='config/power_bi_state.jsonc'
-            )
+            >>> reports_service = power_bi_client.reports()
             >>> pipelines_service = power_bi_client.pipelines()
         """
 
         return Pipelines(session=self.power_bi_session)
+
+    def datasets(self) -> Datasets:
+        """Used to access the `Datasets` Services and metadata.
+
+        ### Returns
+        ---
+        Datasets:
+            The `Datasets` services Object.
+
+        ### Usage
+        ----
+            >>> reports_service = power_bi_client.reports()
+            >>> datasets_service = power_bi_client.datasets()
+        """
+
+        return Datasets(session=self.power_bi_session)
